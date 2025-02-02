@@ -1,11 +1,60 @@
 // Dados dos produtos
 const products = [
     {
+        id: 'shiny-potion-100',
+        name: '100x SHINY POTION',
+        emoji: '✨',
+        price: 3.00,
+        category: 'anime_fighter',
+        description: 'Poção para aumentar suas chances de Shiny',
+        stock: 50,
+        badge: 'POPULAR'
+    },
+    {
+        id: 'diamantes-10k',
+        name: '10.000 DIAMANTES',
+        emoji: '💎',
+        price: 5.00,
+        category: 'free_fire',
+        description: 'Diamantes para Free Fire',
+        stock: 100,
+        badge: 'PROMOÇÃO'
+    },
+    {
+        id: 'diamantes-50k',
+        name: '50.000 DIAMANTES',
+        emoji: '💎',
+        price: 20.00,
+        category: 'free_fire',
+        description: 'Diamantes para Free Fire',
+        stock: 30
+    },
+    {
+        id: 'diamantes-100k',
+        name: '100.000 DIAMANTES',
+        emoji: '💎',
+        price: 35.00,
+        category: 'free_fire',
+        description: 'Diamantes para Free Fire',
+        stock: 0,
+        badge: 'ESGOTADO'
+    },
+    {
+        id: 'shiny-potion-500',
+        name: '500x SHINY POTION',
+        emoji: '✨',
+        price: 12.00,
+        category: 'anime_fighter',
+        description: 'Poção para aumentar suas chances de Shiny',
+        stock: 25,
+        badge: 'ÚLTIMO LOTE'
+    },
+    {
         id: 1,
         name: "100x SHINY POTION",
         emoji: "✨",
         price: 3.00,
-        category: "anime_fighters",
+        category: "anime_fighter",
         description: "Poção para aumentar suas chances de Shiny",
         stock: 50,
         badge: "POPULAR"
@@ -44,7 +93,7 @@ const products = [
         name: "500x SHINY POTION",
         emoji: "✨",
         price: 12.00,
-        category: "anime_fighters",
+        category: "anime_fighter",
         description: "Poção para aumentar suas chances de Shiny",
         stock: 25,
         badge: "ÚLTIMO LOTE"
@@ -68,574 +117,565 @@ const products = [
         description: "Pacote Premium: 100.000 Diamantes + 1000x Shiny Potion",
         stock: 10,
         badge: "EXCLUSIVO"
+    },
+    // BUSTS
+    {
+        id: 'shiny-potion-100',
+        name: '100x SHINY POTION',
+        price: 3.00,
+        emoji: '✨',
+        category: 'busts',
+        description: 'Poção brilhante para melhorar seus personagens'
+    },
+    {
+        id: 'super-time-250',
+        name: '250x SUPER TIME',
+        price: 7.50,
+        emoji: '⏳',
+        category: 'busts',
+        description: 'Aumente o tempo de suas missões'
+    },
+    {
+        id: 'super-time-100',
+        name: '100x SUPER TIME',
+        price: 3.00,
+        emoji: '⏳',
+        category: 'busts',
+        description: 'Aumente o tempo de suas missões'
+    },
+    {
+        id: 'super-luck-100',
+        name: '100x SUPER LUCK',
+        price: 2.00,
+        emoji: '🍀',
+        category: 'busts',
+        description: 'Aumente sua sorte nas drops'
+    },
+    {
+        id: 'super-luck-250',
+        name: '250x SUPER LUCK',
+        price: 2.70,
+        emoji: '🍀',
+        category: 'busts',
+        description: 'Aumente sua sorte nas drops'
+    },
+    {
+        id: 'super-drop-100',
+        name: '100x SUPER DROP',
+        price: 2.10,
+        emoji: '👜',
+        category: 'busts',
+        description: 'Melhore suas chances de drop'
+    },
+    {
+        id: 'super-drop-250',
+        name: '250x SUPER DROP',
+        price: 5.30,
+        emoji: '👜',
+        category: 'busts',
+        description: 'Melhore suas chances de drop'
+    },
+    {
+        id: 'super-xp-100',
+        name: '100x SUPER XP',
+        price: 2.12,
+        emoji: '⚡',
+        category: 'busts',
+        description: 'Ganhe mais XP nas batalhas'
+    },
+    {
+        id: 'super-xp-250',
+        name: '250x SUPER XP',
+        price: 5.30,
+        emoji: '⚡',
+        category: 'busts',
+        description: 'Ganhe mais XP nas batalhas'
+    },
+    {
+        id: 'super-yen-250',
+        name: '250x SUPER YEN',
+        price: 3.00,
+        emoji: '💸',
+        category: 'busts',
+        description: 'Aumente seus ganhos em Yen'
+    },
+    {
+        id: 'super-dmg-250',
+        name: '250x SUPER DMG',
+        price: 2.30,
+        emoji: '⚔️',
+        category: 'busts',
+        description: 'Aumente seu dano nas batalhas'
+    },
+
+    // ITENS
+    {
+        id: 'clone-token-500',
+        name: '500x CLONE TOKEN',
+        price: 2.00,
+        emoji: '🟣',
+        category: 'itens',
+        description: 'Tokens para criar clones'
+    },
+    {
+        id: 'dungeon-token-50',
+        name: '50x DUNGEON TOKEN',
+        price: 2.00,
+        emoji: '🟡',
+        category: 'itens',
+        description: 'Tokens para dungeons'
+    },
+    {
+        id: 'defence-token-100',
+        name: '100x DEFENCE TOKEN',
+        price: 3.00,
+        emoji: '🔵',
+        category: 'itens',
+        description: 'Tokens de defesa'
+    },
+    {
+        id: 'avatar-up-300',
+        name: '300x AVATAR UP',
+        price: 2.00,
+        emoji: '📖',
+        category: 'itens',
+        description: 'Melhore seu avatar'
+    },
+    {
+        id: 'avatar-double-up-250',
+        name: '250x AVATAR DOUBLE UP',
+        price: 2.00,
+        emoji: '📙',
+        category: 'itens',
+        description: 'Melhoria dupla para seu avatar'
+    },
+    {
+        id: 'avatar-token-100',
+        name: '100x AVATAR TOKEN',
+        price: 2.00,
+        emoji: '🟡',
+        category: 'itens',
+        description: 'Tokens para avatar'
+    },
+    {
+        id: 'trial-shard-1m',
+        name: '1M TRIAL SHARD',
+        price: 12.00,
+        emoji: '☄️',
+        category: 'itens',
+        description: 'Fragmentos de trial'
+    },
+    {
+        id: 'trial-shard-5m',
+        name: '5M TRIAL SHARD',
+        price: 30.00,
+        emoji: '☄️',
+        category: 'itens',
+        description: 'Fragmentos de trial'
+    },
+    {
+        id: 'shard-mundo-35k',
+        name: '35K SHARD MUNDO (PASSIVA)',
+        price: 3.00,
+        emoji: '✨☄️',
+        category: 'itens',
+        description: 'Fragmentos do mundo'
+    },
+    {
+        id: 'futa-divina-10k',
+        name: '10K FUTA DIVINA',
+        price: 4.00,
+        emoji: '🔵',
+        category: 'itens',
+        description: 'Fruta divina especial'
+    },
+    {
+        id: 'fruta-secreta-10k',
+        name: '10K FRUTA SECRETA',
+        price: 2.00,
+        emoji: '⚫',
+        category: 'itens',
+        description: 'Fruta secreta misteriosa'
+    },
+    {
+        id: 'hevelyn-fruits-10',
+        name: '10x HEVELYN FRUITS',
+        price: 2.50,
+        emoji: '🍋',
+        category: 'itens',
+        description: 'Frutas especiais Hevelyn'
+    },
+    {
+        id: 'sard-aura-20k',
+        name: '20k SARD AURA',
+        price: 2.50,
+        emoji: '☪️',
+        category: 'itens',
+        description: 'Aura poderosa'
+    },
+
+    // ARTEFATOS
+    {
+        id: 'artefato-luck',
+        name: 'ARTEFATO FULL (SORTE)',
+        price: 10.00,
+        emoji: '🍀',
+        category: 'artefatos',
+        description: 'Artefato completo de sorte'
+    },
+    {
+        id: 'artefato-drop',
+        name: 'ARTEFATO FULL (DROP)',
+        price: 8.00,
+        emoji: '👜',
+        category: 'artefatos',
+        description: 'Artefato completo de drop'
+    },
+    {
+        id: 'artefato-yen',
+        name: 'ARTEFATO FULL (YEN)',
+        price: 2.00,
+        emoji: '💸',
+        category: 'artefatos',
+        description: 'Artefato completo de yen'
+    },
+    {
+        id: 'artefato-dmg',
+        name: 'ARTEFATO FULL (DMG)',
+        price: 2.00,
+        emoji: '⚔️',
+        category: 'artefatos',
+        description: 'Artefato completo de dano'
+    },
+    {
+        id: 'artefato-tempo',
+        name: 'ARTEFATO FULL (TEMPO)',
+        price: 6.00,
+        emoji: '⏳',
+        category: 'artefatos',
+        description: 'Artefato completo de tempo'
+    },
+    {
+        id: 'artefato-dungeon',
+        name: 'ARTEFATO FULL (DUNGEON)',
+        price: 2.00,
+        emoji: '⛰️',
+        category: 'artefatos',
+        description: 'Artefato completo de dungeon'
+    },
+    {
+        id: 'artefato-equipe',
+        name: 'ARTEFATO FULL (EQUIPE)',
+        price: 6.00,
+        emoji: '👪',
+        category: 'artefatos',
+        description: 'Artefato completo de equipe'
+    },
+    {
+        id: 'artefato-passiva-luck',
+        name: 'ARTEFATO FULL (PASSIVA LUCK)',
+        price: 5.00,
+        emoji: '🍀',
+        category: 'artefatos',
+        description: 'Artefato completo de sorte passiva'
+    },
+    {
+        id: 'artefato-xp',
+        name: 'ARTEFATO FULL (XP)',
+        price: 5.00,
+        emoji: '🧪',
+        category: 'artefatos',
+        description: 'Artefato completo de XP'
+    },
+    {
+        id: 'full-artefato',
+        name: 'FULL ARTEFATO',
+        price: 30.00,
+        emoji: '👪🍀',
+        category: 'artefatos',
+        description: 'Conjunto completo de artefatos'
+    },
+
+    // PEDRAS
+    {
+        id: 'todas-pedras-2k',
+        name: '2K TODAS PEDRAS',
+        price: 2.50,
+        emoji: '🟠🟣🟢🔵🔴🟡',
+        category: 'pedras',
+        description: 'Conjunto completo de todas as pedras',
+        isPromotion: true
+    },
+
+    // Free Fire
+    {
+        id: 'ff-diamantes-100k',
+        name: '100.000 Diamantes',
+        price: 50.00,
+        emoji: '💎',
+        category: 'free_fire',
+        description: 'Pacote de 100.000 diamantes para Free Fire'
+    },
+    {
+        id: 'ff-diamantes-50k',
+        name: '50.000 Diamantes',
+        price: 25.00,
+        emoji: '💎',
+        category: 'free_fire',
+        description: 'Pacote de 50.000 diamantes para Free Fire'
+    },
+    {
+        id: 'ff-diamantes-20k',
+        name: '20.000 Diamantes',
+        price: 10.00,
+        emoji: '💎',
+        category: 'free_fire',
+        description: 'Pacote de 20.000 diamantes para Free Fire'
+    },
+
+    // Assinaturas
+    {
+        id: 'assinatura-mensal',
+        name: 'Assinatura Mensal',
+        price: 19.99,
+        emoji: '🌟',
+        category: 'assinaturas',
+        description: 'Acesso completo por 30 dias'
+    },
+    {
+        id: 'assinatura-trimestral',
+        name: 'Assinatura Trimestral',
+        price: 49.99,
+        emoji: '🚀',
+        category: 'assinaturas',
+        description: 'Acesso completo por 90 dias com desconto'
+    },
+    {
+        id: 'assinatura-anual',
+        name: 'Assinatura Anual',
+        price: 149.99,
+        emoji: '🌈',
+        category: 'assinaturas',
+        description: 'Acesso completo por 365 dias com super desconto'
+    },
+    {
+        id: 'full-booster-comum-1',
+        name: '✨FULL QUALQUER BOSSTER COMUM✨',
+        price: 1.00,
+        category: 'anime_fighter',
+        description: 'Full booster comum para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'full-super-booster',
+        name: '✨FULL QUALQUER SUPER BOOSTER✨',
+        price: 1.50,
+        category: 'anime_fighter',
+        description: 'Full super booster para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'full-booster-comum-2',
+        name: '✨FULL QUALQUER BOSSTER COMUM✨',
+        price: 2.00,
+        category: 'anime_fighter',
+        description: 'Full booster comum para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'clone-token-200',
+        name: '🟣200x CLONE TOKEN🟣',
+        price: 1.00,
+        category: 'anime_fighter',
+        description: 'Tokens de clone para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'dungeon-token-50',
+        name: '🟡50x DUNGEON TOKEN🟡',
+        price: 1.00,
+        category: 'anime_fighter',
+        description: 'Tokens de dungeon para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'defence-token-100',
+        name: '🔵100x DEFENCE TOKEN🔵',
+        price: 1.00,
+        category: 'anime_fighter',
+        description: 'Tokens de defesa para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'avatar-up-300',
+        name: '📖300x AVATAR UP📖',
+        price: 2.00,
+        category: 'anime_fighter',
+        description: 'Avatar UP para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'avatar-double-up-250',
+        name: '📙250x AVATAR DOUBLE UP📙',
+        price: 2.00,
+        category: 'anime_fighter',
+        description: 'Avatar Double UP para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'avatar-token-100',
+        name: '🟡100x AVATAR TOKEN🟡',
+        price: 2.00,
+        category: 'anime_fighter',
+        description: 'Tokens de avatar para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'trial-shard-1k',
+        name: '☄️1k TRIAL SHARD☄️',
+        price: 0.50,
+        category: 'anime_fighter',
+        description: 'Trial Shards para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'trial-shard-10k',
+        name: '☄️10k TRIAL SHARD☄️',
+        price: 1.00,
+        category: 'anime_fighter',
+        description: 'Trial Shards para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'trial-shard-25k',
+        name: '☄️25k TRIAL SHARD☄️',
+        price: 2.00,
+        category: 'anime_fighter',
+        description: 'Trial Shards para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'trial-shard-30k',
+        name: '☄️30k TRIAL SHARD☄️',
+        price: 2.50,
+        category: 'anime_fighter',
+        description: 'Trial Shards para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'shard-mundo-35k',
+        name: '✨☄️35K SHARD MUNDO (PASSIVA)☄️✨',
+        price: 3.00,
+        category: 'anime_fighter',
+        description: 'Shards de mundo (passiva) para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'fruta-divina-1k',
+        name: '🔵1k FUTA DIVINA🔵',
+        price: 0.50,
+        category: 'anime_fighter',
+        description: 'Frutas divinas para seu personagem',
+        stock: 999
+    },
+    {
+        id: 'fruta-secreta-1k',
+        name: '⚫1K FRUTA SECRETA⚫',
+        price: 0.20,
+        category: 'anime_fighter',
+        description: 'Frutas secretas para seu personagem',
+        stock: 999
     }
 ];
 
-// Promoções ativas
-const activePromotions = {
-    categories: {
-        'free_fire': 10, // 10% em Free Fire
-        'anime_fighters': 15 // 15% em Anime Fighters
-    },
-    timeEvents: [
-        {
-            name: "HAPPY HOUR",
-            schedule: "18:00-20:00",
-            discount: 15,
-            description: "15% OFF em todos os produtos"
-        }
-    ]
-};
+document.addEventListener('DOMContentLoaded', function() {
+    // Exibir todos os produtos inicialmente
+    displayProducts(products);
 
-// Estado do carrinho
-let cart = [];
-let currentCategory = 'todos';
-let searchTerm = '';
-let currentCoupon = null;
-let currentPaymentMethod = 'pix';
+    // Adicionar event listeners aos botões de categoria
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remover classe 'active' de todos os botões
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            // Adicionar classe 'active' ao botão clicado
+            this.classList.add('active');
 
-// Cupons de desconto
-const coupons = {
-    'BEMVINDO': 10, // 10% de desconto
-    'ANGELS': 15,   // 15% de desconto
-    'VIP': 20,      // 20% de desconto
-    'NOVO': 25      // 25% de desconto
-};
+            const category = this.getAttribute('data-category');
+            if (category === 'todos') {
+                displayProducts(products);
+            } else {
+                const filteredProducts = products.filter(product => 
+                    product.category.toLowerCase() === category.toLowerCase()
+                );
+                displayProducts(filteredProducts);
+            }
+        });
+    });
 
-// Sistema de Autenticação
-const authSystem = {
-    users: JSON.parse(localStorage.getItem('users')) || [],
-    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
-    
-    // Registro de novo usuário
-    register: function(name, email, whatsapp, password) {
-        // Validações
-        if (!name || !email || !whatsapp || !password) {
-            showNotification('Preencha todos os campos', 'error');
-            return false;
-        }
-        
-        if (password.length < 6) {
-            showNotification('A senha deve ter no mínimo 6 caracteres', 'error');
-            return false;
-        }
-        
-        if (this.users.some(u => u.email === email)) {
-            showNotification('Este email já está cadastrado', 'error');
-            return false;
-        }
-        
-        // Criar novo usuário
-        const user = {
-            id: Date.now(),
-            name,
-            email,
-            whatsapp,
-            password, // Em produção, usar hash
-            orders: [],
-            createdAt: new Date().toISOString(),
-            points: 0,
-            firstPurchaseUsed: false
-        };
-        
-        this.users.push(user);
-        localStorage.setItem('users', JSON.stringify(this.users));
-        
-        // Login automático
-        this.login(email, password);
-        return true;
-    },
-    
-    // Login
-    login: function(email, password) {
-        const user = this.users.find(u => u.email === email && u.password === password);
-        
-        if (!user) {
-            showNotification('Email ou senha incorretos', 'error');
-            return false;
-        }
-        
-        this.currentUser = user;
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        
-        showNotification(`Bem-vindo(a) de volta, ${user.name}!`);
-        updateAuthUI();
-        closeAuthModal();
-        return true;
-    },
-    
-    // Logout
-    logout: function() {
-        this.currentUser = null;
-        localStorage.removeItem('currentUser');
-        updateAuthUI();
-        showNotification('Logout realizado com sucesso');
-    },
-    
-    // Adicionar pedido ao histórico
-    addOrder: function(order) {
-        if (!this.currentUser) return;
-        
-        this.currentUser.orders.push(order);
-        this.currentUser.points += Math.floor(order.total); // 1 ponto por real gasto
-        
-        // Atualizar no array de usuários
-        const userIndex = this.users.findIndex(u => u.id === this.currentUser.id);
-        this.users[userIndex] = this.currentUser;
-        
-        // Salvar alterações
-        localStorage.setItem('users', JSON.stringify(this.users));
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    }
-};
+    // Adicionar event listener para busca
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
 
-// Elementos do DOM
-const productsContainer = document.getElementById('products-container');
-const cartModal = document.getElementById('cart-modal');
-const cartItems = document.getElementById('cart-items');
-const cartTotal = document.getElementById('cart-total');
-const cartCount = document.querySelector('.cart-count');
-const cartToggle = document.getElementById('cart-toggle');
-const cartClose = document.getElementById('cart-close');
-const checkoutBtn = document.getElementById('checkout-btn');
-const categoryBtns = document.querySelectorAll('.category-btn');
-const previewModal = document.getElementById('preview-modal');
-const previewClose = document.getElementById('preview-close');
-const previewDetails = document.getElementById('preview-details');
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-btn');
-const sortSelect = document.getElementById('sort-select');
-const notification = document.getElementById('notification');
-const couponInput = document.getElementById('coupon-input');
-const applyCouponBtn = document.getElementById('apply-coupon');
-const cartSubtotal = document.getElementById('cart-subtotal');
-const cartDiscount = document.getElementById('cart-discount');
-const supportBtn = document.getElementById('support-btn');
-const supportModal = document.getElementById('support-modal');
-const supportClose = document.getElementById('support-close');
-const paymentOptions = document.querySelectorAll('input[name="payment"]');
-
-// Elementos do DOM para autenticação
-const authModal = document.getElementById('auth-modal');
-const authClose = document.getElementById('auth-close');
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
-const authTabs = document.querySelectorAll('.auth-tab');
-
-// Funções
-function showNotification(message, type = 'success') {
-    notification.textContent = message;
-    notification.className = `notification ${type} show`;
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
-}
-
-function filterProducts() {
-    let filtered = products;
-    
-    // Filtrar por categoria
-    if (currentCategory !== 'todos') {
-        filtered = filtered.filter(product => product.category === currentCategory);
-    }
-    
-    // Filtrar por busca
-    if (searchTerm) {
-        const term = searchTerm.toLowerCase();
-        filtered = filtered.filter(product => 
-            product.name.toLowerCase().includes(term) ||
-            product.description.toLowerCase().includes(term)
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredProducts = products.filter(product =>
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
         );
+        displayProducts(filteredProducts);
     }
-    
-    // Ordenar
-    const sortValue = sortSelect.value;
-    switch (sortValue) {
-        case 'price-asc':
-            filtered.sort((a, b) => a.price - b.price);
-            break;
-        case 'price-desc':
-            filtered.sort((a, b) => b.price - a.price);
-            break;
-        case 'name':
-            filtered.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-    }
-    
-    return filtered;
-}
 
-function displayProducts() {
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+});
+
+// Função para exibir produtos
+function displayProducts(productsToShow) {
+    const productsContainer = document.getElementById('products-container');
     productsContainer.innerHTML = '';
-    const filteredProducts = filterProducts();
 
-    if (filteredProducts.length === 0) {
-        productsContainer.innerHTML = '<p class="no-results">Nenhum produto encontrado</p>';
+    if (productsToShow.length === 0) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'empty-message';
+        emptyMessage.innerHTML = `
+            <div class="empty-icon">😢</div>
+            <h3>Nenhum produto encontrado</h3>
+            <p>Não encontramos produtos nesta categoria no momento.</p>
+        `;
+        productsContainer.appendChild(emptyMessage);
         return;
     }
 
-    filteredProducts.forEach(product => {
-        const isOutOfStock = product.stock === 0;
-        const card = document.createElement('div');
-        card.className = `product-card slideUp ${isOutOfStock ? 'out-of-stock' : ''}`;
+    productsToShow.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
         
-        let badgeHtml = product.badge ? `<div class="product-badge">${product.badge}</div>` : '';
-        let stockHtml = `<div class="product-stock">${isOutOfStock ? 'Fora de estoque' : `${product.stock} em estoque`}</div>`;
-        
-        // Verifica se há desconto na categoria
-        let priceHtml = `<div class="product-price">R$ ${product.price.toFixed(2)}</div>`;
-        if (activePromotions.categories[product.category]) {
-            const discount = activePromotions.categories[product.category];
-            const discountedPrice = product.price * (1 - discount / 100);
-            priceHtml = `
-                <div class="product-price">
-                    <span class="original-price">R$ ${product.price.toFixed(2)}</span>
-                    <span class="discounted-price">R$ ${discountedPrice.toFixed(2)}</span>
-                    <span class="discount-tag">-${discount}%</span>
-                </div>
-            `;
+        let badgeHTML = '';
+        if (product.badge) {
+            badgeHTML = `<span class="badge">${product.badge}</span>`;
         }
-        
-        card.innerHTML = `
-            ${badgeHtml}
-            <div class="product-emoji">${product.emoji}</div>
-            <h3 class="product-name">${product.name}</h3>
-            ${priceHtml}
-            ${stockHtml}
-            <button class="add-to-cart" onclick="addToCart(${product.id})" ${isOutOfStock ? 'disabled' : ''}>
-                ${isOutOfStock ? 'Indisponível' : 'Adicionar ao Carrinho'}
+
+        let stockStatus = '';
+        if (product.stock === 0) {
+            stockStatus = '<span class="out-of-stock">Esgotado</span>';
+        }
+
+        productCard.innerHTML = `
+            ${badgeHTML}
+            <h3>${product.name}</h3>
+            <p class="description">${product.description || ''}</p>
+            <p class="price">R$ ${product.price.toFixed(2)}</p>
+            ${stockStatus}
+            <button class="buy-btn" ${product.stock === 0 ? 'disabled' : ''}>
+                Comprar
             </button>
         `;
-        
-        card.onclick = (e) => {
-            if (!e.target.classList.contains('add-to-cart')) {
-                showPreview(product);
-            }
-        };
-        
-        productsContainer.appendChild(card);
+
+        productsContainer.appendChild(productCard);
     });
 }
-
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product || product.stock === 0) {
-        showNotification('Produto fora de estoque', 'error');
-        return;
-    }
-
-    const cartItem = cart.find(item => item.id === productId);
-    if (cartItem) {
-        if (cartItem.quantity >= product.stock) {
-            showNotification('Quantidade máxima atingida', 'error');
-            return;
-        }
-        cartItem.quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-
-    showNotification(`${product.name} adicionado ao carrinho!`);
-    updateCart();
-}
-
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCart();
-}
-
-function updateQuantity(productId, change) {
-    const cartItem = cart.find(item => item.id === productId);
-    const product = products.find(p => p.id === productId);
-
-    if (cartItem) {
-        const newQuantity = cartItem.quantity + change;
-        if (newQuantity > 0 && newQuantity <= product.stock) {
-            cartItem.quantity = newQuantity;
-            updateCart();
-        } else if (newQuantity <= 0) {
-            removeFromCart(productId);
-        } else {
-            showNotification('Quantidade máxima atingida', 'error');
-        }
-    }
-}
-
-function calculateCartTotal() {
-    let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    let discount = 0;
-
-    // Desconto do cupom
-    if (currentCoupon) {
-        discount += subtotal * (coupons[currentCoupon] / 100);
-    }
-
-    // Desconto do PIX
-    if (currentPaymentMethod === 'pix') {
-        discount += subtotal * 0.05; // 5% de desconto no PIX
-    }
-
-    // Desconto de categoria
-    cart.forEach(item => {
-        if (activePromotions.categories[item.category]) {
-            discount += (item.price * item.quantity) * (activePromotions.categories[item.category] / 100);
-        }
-    });
-
-    // Verifica se é HAPPY HOUR
-    const now = new Date();
-    const hour = now.getHours();
-    if (hour >= 18 && hour < 20) {
-        discount += subtotal * 0.15; // 15% de desconto no Happy Hour
-    }
-
-    const total = subtotal - discount;
-    return { subtotal, discount, total };
-}
-
-function updateCart() {
-    cartItems.innerHTML = '';
-    const { subtotal, discount, total } = calculateCartTotal();
-
-    cart.forEach(item => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-            <div class="cart-item-emoji">${item.emoji}</div>
-            <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">R$ ${item.price.toFixed(2)} x ${item.quantity}</div>
-            </div>
-            <div class="cart-item-actions">
-                <button onclick="updateQuantity(${item.id}, -1)">-</button>
-                <span>${item.quantity}</span>
-                <button onclick="updateQuantity(${item.id}, 1)">+</button>
-                <button onclick="removeFromCart(${item.id})">🗑️</button>
-            </div>
-        `;
-        cartItems.appendChild(cartItem);
-    });
-
-    cartSubtotal.textContent = `R$ ${subtotal.toFixed(2)}`;
-    cartDiscount.textContent = `- R$ ${discount.toFixed(2)}`;
-    cartTotal.textContent = `R$ ${total.toFixed(2)}`;
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-}
-
-function showPreview(product) {
-    previewDetails.innerHTML = `
-        <div class="preview-emoji">${product.emoji}</div>
-        <h2>${product.name}</h2>
-        <p class="preview-description">${product.description}</p>
-        <div class="preview-price">R$ ${product.price.toFixed(2)}</div>
-        <div class="preview-stock">
-            ${product.stock > 0 ? `${product.stock} em estoque` : 'Fora de estoque'}
-        </div>
-        <button class="add-to-cart" onclick="addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
-            ${product.stock === 0 ? 'Indisponível' : 'Adicionar ao Carrinho'}
-        </button>
-    `;
-    previewModal.style.display = 'block';
-}
-
-function applyCoupon() {
-    const code = couponInput.value.toUpperCase();
-    if (coupons[code]) {
-        currentCoupon = code;
-        showNotification(`Cupom ${code} aplicado com sucesso! ${coupons[code]}% de desconto`);
-        updateCart();
-    } else {
-        showNotification('Cupom inválido', 'error');
-    }
-}
-
-function checkout() {
-    if (cart.length === 0) {
-        showNotification('Seu carrinho está vazio', 'error');
-        return;
-    }
-
-    const { subtotal, discount, total } = calculateCartTotal();
-    let message = "🛒 *Novo Pedido - Angels Store*\n\n";
-    
-    // Produtos
-    message += "*Produtos:*\n";
-    cart.forEach(item => {
-        message += `${item.emoji} *${item.name}*\n`;
-        message += `Quantidade: ${item.quantity}\n`;
-        message += `Preço: R$ ${(item.price * item.quantity).toFixed(2)}\n\n`;
-    });
-    
-    // Resumo financeiro
-    message += "\n💰 *Resumo do Pedido*\n";
-    message += `Subtotal: R$ ${subtotal.toFixed(2)}\n`;
-    if (discount > 0) {
-        message += `Desconto: R$ ${discount.toFixed(2)}\n`;
-    }
-    message += `Total: R$ ${total.toFixed(2)}\n\n`;
-    
-    // Informações de pagamento
-    message += `💳 *Forma de pagamento:* ${currentPaymentMethod === 'pix' ? 'PIX (5% OFF)' : 'Cartão'}\n`;
-    if (currentCoupon) {
-        message += `🎟️ *Cupom aplicado:* ${currentCoupon}\n`;
-    }
-
-    // Informações adicionais
-    message += "\n📦 *Informações da Entrega*\n";
-    message += "✅ Entrega instantânea após confirmação\n";
-    message += "✅ Suporte 24h via WhatsApp\n";
-    message += "✅ Garantia de satisfação\n\n";
-
-    message += "*Angels Store - A melhor loja de itens para games!*";
-
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/5524981128510?text=${encodedMessage}`);
-}
-
-// Event Listeners
-cartToggle.onclick = () => cartModal.style.display = 'block';
-cartClose.onclick = () => cartModal.style.display = 'none';
-previewClose.onclick = () => previewModal.style.display = 'none';
-checkoutBtn.onclick = checkout;
-
-searchInput.addEventListener('input', (e) => {
-    searchTerm = e.target.value;
-    displayProducts();
-});
-
-searchBtn.addEventListener('click', () => {
-    displayProducts();
-});
-
-sortSelect.addEventListener('change', () => {
-    displayProducts();
-});
-
-categoryBtns.forEach(btn => {
-    btn.onclick = () => {
-        categoryBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentCategory = btn.dataset.category;
-        displayProducts();
-    };
-});
-
-applyCouponBtn.onclick = applyCoupon;
-
-paymentOptions.forEach(option => {
-    option.addEventListener('change', (e) => {
-        currentPaymentMethod = e.target.value;
-        updateCart();
-    });
-});
-
-window.onclick = (e) => {
-    if (e.target === cartModal) cartModal.style.display = 'none';
-    if (e.target === previewModal) previewModal.style.display = 'none';
-    if (e.target === supportModal) supportModal.style.display = 'none';
-};
-
-// Event Listeners para autenticação
-authTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const formId = tab.dataset.tab;
-        authTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        
-        if (formId === 'login') {
-            loginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-        } else {
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'block';
-        }
-    });
-});
-
-// Login
-document.getElementById('login-btn').addEventListener('click', () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    authSystem.login(email, password);
-});
-
-// Registro
-document.getElementById('register-btn').addEventListener('click', () => {
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const whatsapp = document.getElementById('register-whatsapp').value;
-    const password = document.getElementById('register-password').value;
-    const confirmPassword = document.getElementById('register-confirm-password').value;
-    
-    if (password !== confirmPassword) {
-        showNotification('As senhas não coincidem', 'error');
-        return;
-    }
-    
-    authSystem.register(name, email, whatsapp, password);
-});
-
-// Funções auxiliares
-function updateAuthUI() {
-    const user = authSystem.currentUser;
-    const headerActions = document.querySelector('.header-actions');
-    
-    if (user) {
-        headerActions.innerHTML = `
-            <div class="user-menu">
-                <span class="user-name">👤 ${user.name}</span>
-                <div class="user-dropdown">
-                    <a href="#" onclick="showOrders()">📦 Meus Pedidos</a>
-                    <a href="#" onclick="showProfile()">⚙️ Minha Conta</a>
-                    <a href="#" onclick="authSystem.logout()">🚪 Sair</a>
-                </div>
-            </div>
-            <div class="cart-btn" id="cart-toggle">
-                <span class="emoji">🛒</span>
-                <span class="cart-count">0</span>
-            </div>
-        `;
-    } else {
-        headerActions.innerHTML = `
-            <button class="login-btn" onclick="showAuthModal()">👤 Entrar</button>
-            <div class="cart-btn" id="cart-toggle">
-                <span class="emoji">🛒</span>
-                <span class="cart-count">0</span>
-            </div>
-        `;
-    }
-}
-
-function showAuthModal() {
-    authModal.style.display = 'block';
-}
-
-function closeAuthModal() {
-    authModal.style.display = 'none';
-}
-
-function showOrders() {
-    if (!authSystem.currentUser) return;
-    
-    const orders = authSystem.currentUser.orders;
-    // Implementar visualização de pedidos
-}
-
-function showProfile() {
-    if (!authSystem.currentUser) return;
-    // Implementar edição de perfil
-}
-
-// Fechar modal ao clicar fora
-authModal.onclick = (e) => {
-    if (e.target === authModal) closeAuthModal();
-};
-
-// Fechar com o botão X
-authClose.onclick = closeAuthModal;
-
-// Inicializar UI de autenticação
-updateAuthUI();
-
-// Inicialização
-displayProducts();
