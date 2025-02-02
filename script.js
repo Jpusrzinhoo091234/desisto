@@ -212,6 +212,59 @@ const products = [
     }
 ];
 
+// Sistema de contador de acessos
+const visitCounter = {
+    INCREMENT_VALUE: 4.5678, // Valor para incrementar a cada visita
+
+    initialize: function() {
+        // Verifica se é a primeira visita do dia
+        const today = new Date().toDateString();
+        const lastVisit = localStorage.getItem('lastVisit');
+        let totalVisits = parseFloat(localStorage.getItem('totalVisits'));
+        
+        // Se não existir contagem, inicializa com 0
+        if (isNaN(totalVisits)) {
+            totalVisits = 0;
+            localStorage.setItem('totalVisits', totalVisits);
+        }
+        
+        if (lastVisit !== today) {
+            // Nova visita do dia
+            localStorage.setItem('lastVisit', today);
+            totalVisits += this.INCREMENT_VALUE;
+            localStorage.setItem('totalVisits', totalVisits);
+            
+            // Atualiza o contador na interface
+            this.updateVisitDisplay();
+            
+            // Registra a visita (você pode implementar uma chamada de API aqui)
+            this.logVisit();
+        } else {
+            // Atualiza o display mesmo se não for uma nova visita
+            this.updateVisitDisplay();
+        }
+    },
+    
+    updateVisitDisplay: function() {
+        const totalVisits = parseFloat(localStorage.getItem('totalVisits')) || 0;
+        // Cria ou atualiza o elemento de exibição do contador
+        let counterDisplay = document.getElementById('visit-counter');
+        if (!counterDisplay) {
+            counterDisplay = document.createElement('div');
+            counterDisplay.id = 'visit-counter';
+            counterDisplay.style.cssText = 'position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;';
+            document.body.appendChild(counterDisplay);
+        }
+        // Converte para inteiro usando Math.floor para mostrar apenas a parte inteira
+        counterDisplay.textContent = `Visitas: ${Math.floor(totalVisits)}`;
+    },
+    
+    logVisit: function() {
+        // Aqui você pode implementar uma chamada para seu backend
+        console.log('Nova visita registrada:', new Date().toISOString());
+    }
+};
+
 // Função para exibir produtos
 function displayProducts(productsToShow) {
     const productsContainer = document.getElementById('products-container');
@@ -314,31 +367,27 @@ function showCartNotification() {
 function showCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartContainer = document.getElementById('cart-container');
-    const cartContent = document.getElementById('cart-content');
+    const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
-    const checkoutBtn = document.getElementById('checkout-btn');
-    const closeCartBtn = document.getElementById('cart-close-btn');
 
-    // Clear previous content
-    cartContent.innerHTML = '';
-    
-    // Close cart when X is clicked
-    closeCartBtn.addEventListener('click', () => {
-        cartContainer.style.display = 'none';
-    });
+    if (!cartContainer || !cartItems || !cartTotal) return;
+
+    // Limpa o conteúdo anterior
+    cartItems.innerHTML = '';
 
     if (cart.length === 0) {
-        cartContent.innerHTML = `
+        cartItems.innerHTML = `
             <div class="empty-cart">
                 <p>Seu carrinho está vazio 😢</p>
             </div>
         `;
         cartTotal.textContent = 'R$ 0,00';
-        checkoutBtn.disabled = true;
-        checkoutBtn.textContent = 'Carrinho Vazio';
     } else {
         let total = 0;
         cart.forEach(item => {
+            const itemTotal = item.price * (item.quantity || 1);
+            total += itemTotal;
+
             const itemElement = document.createElement('div');
             itemElement.classList.add('cart-item');
             itemElement.innerHTML = `
@@ -346,70 +395,164 @@ function showCart() {
                     <div class="cart-item-name">${item.name}</div>
                     <div class="cart-item-price">R$ ${item.price.toFixed(2)}</div>
                 </div>
-                <button class="remove-item-btn" data-id="${item.id}">Remover</button>
+                <div class="cart-item-actions">
+                    <div class="quantity-controls">
+                        <button onclick="updateItemQuantity('${item.id}', ${(item.quantity || 1) - 1})">-</button>
+                        <span>${item.quantity || 1}</span>
+                        <button onclick="updateItemQuantity('${item.id}', ${(item.quantity || 1) + 1})">+</button>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart('${item.id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             `;
-            cartContent.appendChild(itemElement);
-            total += item.price;
+            cartItems.appendChild(itemElement);
         });
 
         cartTotal.textContent = `R$ ${total.toFixed(2)}`;
-        checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Finalizar Compra';
     }
 
-    // WhatsApp checkout
-    const whatsappBtn = document.getElementById('whatsapp-checkout');
-    whatsappBtn.addEventListener('click', () => {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        if (cart.length === 0) {
-            alert('Seu carrinho está vazio!');
-            return;
-        }
-
-        let message = "Olá! Quero finalizar minha compra:\n\n";
-        let total = 0;
-        cart.forEach(item => {
-            message += `- ${item.name} (R$ ${item.price.toFixed(2)})\n`;
-            total += item.price;
-        });
-        message += `\nTotal: R$ ${total.toFixed(2)}`;
-
-        const whatsappNumber = '24981128510';
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    });
-
-    // Show cart
+    // Mostra o carrinho
     cartContainer.style.display = 'block';
+}
+
+// Função para fechar o carrinho
+function hideCart() {
+    const cartContainer = document.getElementById('cart-container');
+    if (cartContainer) {
+        cartContainer.style.display = 'none';
+    }
 }
 
 // Função para remover item do carrinho
 function removeFromCart(productId) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = cart.filter(item => item.id !== productId);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const updatedCart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
     updateCartCount();
-    displayProducts(products);
+    showCart(); // Atualiza a visualização do carrinho
 }
 
-// Função para limpar carrinho
-function clearCart() {
-    localStorage.removeItem('cart');
-    updateCartCount();
-    displayProducts(products);
-}
-
-// Função para atualizar quantidade do item no carrinho
+// Função para atualizar quantidade do item
 function updateItemQuantity(productId, quantity) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (quantity < 1) {
+        removeFromCart(productId);
+        return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const item = cart.find(item => item.id === productId);
+    
     if (item) {
         item.quantity = quantity;
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-        displayProducts(products);
+        showCart(); // Atualiza a visualização do carrinho
     }
 }
+
+// Função para gerar mensagem do WhatsApp
+function generateWhatsAppMessage() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cartItems.length === 0) return '';
+
+    let message = "🛒 *Novo Pedido*\n\n";
+    let total = 0;
+
+    cartItems.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        message += `*${item.name}*\n`;
+        message += `Quantidade: ${item.quantity}\n`;
+        message += `Preço: R$ ${item.price.toFixed(2)}\n`;
+        message += `Subtotal: R$ ${subtotal.toFixed(2)}\n\n`;
+        total += subtotal;
+    });
+
+    message += `*Total do Pedido: R$ ${total.toFixed(2)}*\n\n`;
+    message += "💬 Preciso de suporte ou tenho dúvidas? Entre em contato:\n";
+    message += "📱 WhatsApp: (24) 98112-8510";
+
+    return encodeURIComponent(message);
+}
+
+function sendToWhatsApp() {
+    const message = generateWhatsAppMessage();
+    if (message) {
+        window.open(`https://wa.me/24981128510?text=${message}`, '_blank');
+    } else {
+        alert('Adicione itens ao carrinho primeiro!');
+    }
+}
+
+function sendSupportMessage() {
+    const messageModal = document.getElementById('message-modal');
+    messageModal.classList.add('active');
+}
+
+function closeMessageModal() {
+    const messageModal = document.getElementById('message-modal');
+    messageModal.classList.remove('active');
+}
+
+function sendCustomMessage() {
+    const messageText = document.getElementById('support-message').value.trim();
+    if (!messageText) {
+        alert('Por favor, digite sua mensagem antes de enviar.');
+        return;
+    }
+
+    const whatsappNumber = "24981128510";
+    const message = `👋 Olá! ${messageText}`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    closeMessageModal();
+    document.getElementById('support-message').value = '';
+}
+
+// Fechar modal ao clicar fora
+document.addEventListener('click', function(event) {
+    const messageModal = document.getElementById('message-modal');
+    const messageContent = document.querySelector('.message-content');
+    
+    if (event.target === messageModal) {
+        closeMessageModal();
+    }
+});
+
+// Função para filtrar produtos
+function filterProducts(category) {
+    const buttons = document.querySelectorAll('nav button');
+    buttons.forEach(button => button.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const filteredProducts = category === 'all' 
+        ? products 
+        : products.filter(product => product.category === category);
+    
+    displayProducts(filteredProducts);
+}
+
+// Inicializar quando o documento carregar
+document.addEventListener('DOMContentLoaded', function() {
+    displayProducts(products);
+    updateCartCount();
+    visitCounter.initialize();
+
+    // Adicionar evento para fechar carrinho quando clicar fora
+    const cartContainer = document.getElementById('cart-container');
+    if (cartContainer) {
+        cartContainer.addEventListener('click', function(e) {
+            if (e.target === cartContainer) {
+                hideCart();
+            }
+        });
+    }
+
+    // Adicionar evento para o botão de fechar do carrinho
+    const closeCartBtn = document.querySelector('.cart-close-btn');
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', hideCart);
+    }
+});
 
 // Event listeners for buttons
 document.querySelector('.clear-cart-btn').addEventListener('click', clearCart);
@@ -429,66 +572,3 @@ function renderCartItems() {
         cartItemsContainer.appendChild(itemElement);
     });
 }
-
-// Função para gerar mensagem do WhatsApp
-function generateWhatsAppMessage() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (cart.length === 0) {
-        alert('Seu carrinho está vazio!');
-        return;
-    }
-
-    let message = '🛒 *NOVO PEDIDO*\n\n';
-    let total = 0;
-
-    message += '📝 *PRODUTOS SELECIONADOS:*\n';
-    cart.forEach((item, index) => {
-        const subtotal = item.price * (item.quantity || 1);
-        total += subtotal;
-        message += `\n${index + 1}. ${item.name}\n`;
-        message += `   • Quantidade: ${item.quantity || 1}x\n`;
-        message += `   • Preço unitário: R$ ${item.price.toFixed(2)}\n`;
-        message += `   • Subtotal: R$ ${subtotal.toFixed(2)}\n`;
-    });
-
-    message += `\n💰 *TOTAL DO PEDIDO: R$ ${total.toFixed(2)}*\n\n`;
-    message += '📦 *INFORMAÇÕES PARA ENTREGA:*\n';
-    message += 'Por favor, forneça:\n';
-    message += '- Seu nome/nick\n';
-    message += '- Email ou ID do jogo (se aplicável)\n';
-    message += '- Forma de pagamento preferida\n\n';
-    message += '✨ Agradecemos sua preferência!';
-
-    const encodedMessage = encodeURIComponent(message);
-    const phoneNumber = '5511999999999'; // Substitua pelo seu número
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-}
-
-// Função para filtrar produtos
-function filterProducts(category) {
-    const buttons = document.querySelectorAll('nav button');
-    buttons.forEach(button => button.classList.remove('active'));
-    event.target.classList.add('active');
-
-    const filteredProducts = category === 'all' 
-        ? products 
-        : products.filter(product => product.category === category);
-    
-    displayProducts(filteredProducts);
-}
-
-// Inicializar quando o documento carregar
-document.addEventListener('DOMContentLoaded', function() {
-    displayProducts(products);
-    updateCartCount();
-
-    // Event listener para fechar carrinho clicando fora
-    const cartContainer = document.getElementById('cart-container');
-    if (cartContainer) {
-        cartContainer.addEventListener('click', function(e) {
-            if (e.target === cartContainer) {
-                cartContainer.style.display = 'none';
-            }
-        });
-    }
-});
