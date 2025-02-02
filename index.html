@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angels Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span class="emoji">👼</span>
+            <h1>Angels Store</h1>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar produtos...">
+            <button id="search-btn">🔍</button>
+        </div>
+
+        <nav>
+            <button class="category-btn active" data-category="todos">Todos</button>
+            <button class="category-btn" data-category="anime_fighters">Anime Fighters</button>
+            <button class="category-btn" data-category="free_fire">Free Fire</button>
+        </nav>
+
+        <div class="header-actions">
+            <div class="cart-btn" id="cart-toggle">
+                <span class="emoji">🛒</span>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div id="notification" class="notification"></div>
+
+    <main>
+        <div class="filters">
+            <select id="sort-select">
+                <option value="default">Ordenar por</option>
+                <option value="price-asc">Menor preço</option>
+                <option value="price-desc">Maior preço</option>
+                <option value="name">Nome</option>
+            </select>
+        </div>
+
+        <div class="products-grid" id="products-container"></div>
+    </main>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Seu Carrinho</h2>
+                <button class="close-btn" id="cart-close">×</button>
+            </div>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total">R$ 0,00</span>
+                </div>
+                <button class="checkout-btn" id="checkout-btn">
+                    Finalizar no WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-modal" id="preview-modal">
+        <div class="preview-content">
+            <button class="close-btn" id="preview-close">×</button>
+            <div id="preview-details"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
