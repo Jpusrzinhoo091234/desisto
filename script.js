@@ -385,18 +385,49 @@ function showCart() {
 
 // Função para remover item do carrinho
 function removeFromCart(productId) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const updatedCart = cart.filter(item => item.id !== productId);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    showCart();
+    displayProducts(products);
 }
 
 // Função para limpar carrinho
 function clearCart() {
     localStorage.removeItem('cart');
     updateCartCount();
-    showCart();
+    displayProducts(products);
+}
+
+// Função para atualizar quantidade do item no carrinho
+function updateItemQuantity(productId, quantity) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const item = cart.find(item => item.id === productId);
+    if (item) {
+        item.quantity = quantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        displayProducts(products);
+    }
+}
+
+// Event listeners for buttons
+document.querySelector('.clear-cart-btn').addEventListener('click', clearCart);
+
+// Assuming you have a way to render cart items with remove buttons and quantity inputs
+function renderCartItems() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartItemsContainer.innerHTML = '';
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `
+            <span>${item.name}</span>
+            <input type='number' value='${item.quantity}' min='1' onchange='updateItemQuantity("${item.id}", this.value)'>
+            <button onclick='removeFromCart("${item.id}")'>Remover</button>
+        `;
+        cartItemsContainer.appendChild(itemElement);
+    });
 }
 
 // Função para gerar mensagem do WhatsApp
