@@ -102,6 +102,93 @@ const coupons = {
     'NOVO': 25      // 25% de desconto
 };
 
+// Sistema de Autenticação
+const authSystem = {
+    users: JSON.parse(localStorage.getItem('users')) || [],
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+    
+    // Registro de novo usuário
+    register: function(name, email, whatsapp, password) {
+        // Validações
+        if (!name || !email || !whatsapp || !password) {
+            showNotification('Preencha todos os campos', 'error');
+            return false;
+        }
+        
+        if (password.length < 6) {
+            showNotification('A senha deve ter no mínimo 6 caracteres', 'error');
+            return false;
+        }
+        
+        if (this.users.some(u => u.email === email)) {
+            showNotification('Este email já está cadastrado', 'error');
+            return false;
+        }
+        
+        // Criar novo usuário
+        const user = {
+            id: Date.now(),
+            name,
+            email,
+            whatsapp,
+            password, // Em produção, usar hash
+            orders: [],
+            createdAt: new Date().toISOString(),
+            points: 0,
+            firstPurchaseUsed: false
+        };
+        
+        this.users.push(user);
+        localStorage.setItem('users', JSON.stringify(this.users));
+        
+        // Login automático
+        this.login(email, password);
+        return true;
+    },
+    
+    // Login
+    login: function(email, password) {
+        const user = this.users.find(u => u.email === email && u.password === password);
+        
+        if (!user) {
+            showNotification('Email ou senha incorretos', 'error');
+            return false;
+        }
+        
+        this.currentUser = user;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        
+        showNotification(`Bem-vindo(a) de volta, ${user.name}!`);
+        updateAuthUI();
+        closeAuthModal();
+        return true;
+    },
+    
+    // Logout
+    logout: function() {
+        this.currentUser = null;
+        localStorage.removeItem('currentUser');
+        updateAuthUI();
+        showNotification('Logout realizado com sucesso');
+    },
+    
+    // Adicionar pedido ao histórico
+    addOrder: function(order) {
+        if (!this.currentUser) return;
+        
+        this.currentUser.orders.push(order);
+        this.currentUser.points += Math.floor(order.total); // 1 ponto por real gasto
+        
+        // Atualizar no array de usuários
+        const userIndex = this.users.findIndex(u => u.id === this.currentUser.id);
+        this.users[userIndex] = this.currentUser;
+        
+        // Salvar alterações
+        localStorage.setItem('users', JSON.stringify(this.users));
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    }
+};
+
 // Elementos do DOM
 const productsContainer = document.getElementById('products-container');
 const cartModal = document.getElementById('cart-modal');
@@ -127,6 +214,13 @@ const supportBtn = document.getElementById('support-btn');
 const supportModal = document.getElementById('support-modal');
 const supportClose = document.getElementById('support-close');
 const paymentOptions = document.querySelectorAll('input[name="payment"]');
+
+// Elementos do DOM para autenticação
+const authModal = document.getElementById('auth-modal');
+const authClose = document.getElementById('auth-close');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const authTabs = document.querySelectorAll('.auth-tab');
 
 // Funções
 function showNotification(message, type = 'success') {
@@ -395,7 +489,7 @@ function checkout() {
     message += "*Angels Store - A melhor loja de itens para games!*";
 
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/5511999999999?text=${encodedMessage}`);
+    window.open(`https://wa.me/5524981128510?text=${encodedMessage}`);
 }
 
 // Event Listeners
@@ -440,6 +534,108 @@ window.onclick = (e) => {
     if (e.target === previewModal) previewModal.style.display = 'none';
     if (e.target === supportModal) supportModal.style.display = 'none';
 };
+
+// Event Listeners para autenticação
+authTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const formId = tab.dataset.tab;
+        authTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        if (formId === 'login') {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+        } else {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+        }
+    });
+});
+
+// Login
+document.getElementById('login-btn').addEventListener('click', () => {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    authSystem.login(email, password);
+});
+
+// Registro
+document.getElementById('register-btn').addEventListener('click', () => {
+    const name = document.getElementById('register-name').value;
+    const email = document.getElementById('register-email').value;
+    const whatsapp = document.getElementById('register-whatsapp').value;
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+    
+    if (password !== confirmPassword) {
+        showNotification('As senhas não coincidem', 'error');
+        return;
+    }
+    
+    authSystem.register(name, email, whatsapp, password);
+});
+
+// Funções auxiliares
+function updateAuthUI() {
+    const user = authSystem.currentUser;
+    const headerActions = document.querySelector('.header-actions');
+    
+    if (user) {
+        headerActions.innerHTML = `
+            <div class="user-menu">
+                <span class="user-name">👤 ${user.name}</span>
+                <div class="user-dropdown">
+                    <a href="#" onclick="showOrders()">📦 Meus Pedidos</a>
+                    <a href="#" onclick="showProfile()">⚙️ Minha Conta</a>
+                    <a href="#" onclick="authSystem.logout()">🚪 Sair</a>
+                </div>
+            </div>
+            <div class="cart-btn" id="cart-toggle">
+                <span class="emoji">🛒</span>
+                <span class="cart-count">0</span>
+            </div>
+        `;
+    } else {
+        headerActions.innerHTML = `
+            <button class="login-btn" onclick="showAuthModal()">👤 Entrar</button>
+            <div class="cart-btn" id="cart-toggle">
+                <span class="emoji">🛒</span>
+                <span class="cart-count">0</span>
+            </div>
+        `;
+    }
+}
+
+function showAuthModal() {
+    authModal.style.display = 'block';
+}
+
+function closeAuthModal() {
+    authModal.style.display = 'none';
+}
+
+function showOrders() {
+    if (!authSystem.currentUser) return;
+    
+    const orders = authSystem.currentUser.orders;
+    // Implementar visualização de pedidos
+}
+
+function showProfile() {
+    if (!authSystem.currentUser) return;
+    // Implementar edição de perfil
+}
+
+// Fechar modal ao clicar fora
+authModal.onclick = (e) => {
+    if (e.target === authModal) closeAuthModal();
+};
+
+// Fechar com o botão X
+authClose.onclick = closeAuthModal;
+
+// Inicializar UI de autenticação
+updateAuthUI();
 
 // Inicialização
 displayProducts();
