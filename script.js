@@ -365,6 +365,75 @@ function showCartNotification() {
 
 // Função para mostrar carrinho
 function showCart() {
+    const cartContainer = document.getElementById('cart-container');
+    cartContainer.style.display = 'flex';
+    updateCartDisplay();
+}
+
+// Função para fechar o carrinho
+function closeCart() {
+    const cartContainer = document.getElementById('cart-container');
+    cartContainer.style.display = 'none';
+}
+
+// Função para gerar mensagem do WhatsApp
+function generateWhatsAppMessage() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cartItems.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+    }
+
+    let message = "🛒 *Novo Pedido*\n\n";
+    let total = 0;
+
+    cartItems.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        message += `*${item.name}*\n`;
+        message += `Quantidade: ${item.quantity}\n`;
+        message += `Preço: R$ ${item.price.toFixed(2)}\n`;
+        message += `Subtotal: R$ ${subtotal.toFixed(2)}\n\n`;
+        total += subtotal;
+    });
+
+    message += `*Total do Pedido: R$ ${total.toFixed(2)}*\n\n`;
+    message += "💬 Preciso de suporte ou tenho dúvidas? Entre em contato:\n";
+    message += "📱 WhatsApp: (24) 98182-7333";
+
+    const whatsappNumber = "24981827333";
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    closeCart();
+}
+
+// Função para remover item do carrinho
+function removeFromCart(productId) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const updatedCart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    updateCartCount();
+    showCart(); // Atualiza a visualização do carrinho
+}
+
+// Função para atualizar quantidade do item
+function updateItemQuantity(productId, quantity) {
+    if (quantity < 1) {
+        removeFromCart(productId);
+        return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const item = cart.find(item => item.id === productId);
+    
+    if (item) {
+        item.quantity = quantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        showCart(); // Atualiza a visualização do carrinho
+    }
+}
+
+// Função para mostrar carrinho
+function updateCartDisplay() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartContainer = document.getElementById('cart-container');
     const cartItems = document.getElementById('cart-items');
@@ -385,7 +454,7 @@ function showCart() {
     } else {
         let total = 0;
         cart.forEach(item => {
-            const itemTotal = item.price * (item.quantity || 1);
+            const itemTotal = item.price * item.quantity;
             total += itemTotal;
 
             const itemElement = document.createElement('div');
@@ -416,69 +485,57 @@ function showCart() {
     cartContainer.style.display = 'block';
 }
 
-// Função para fechar o carrinho
-function hideCart() {
+// Adicionar evento de clique ao botão de checkout
+document.addEventListener('DOMContentLoaded', function() {
+    displayProducts(products);
+    updateCartCount();
+    visitCounter.initialize();
+
+    // Adicionar evento para fechar carrinho quando clicar fora
     const cartContainer = document.getElementById('cart-container');
     if (cartContainer) {
-        cartContainer.style.display = 'none';
+        cartContainer.addEventListener('click', function(e) {
+            if (e.target === cartContainer) {
+                closeCart();
+            }
+        });
     }
-}
 
-// Função para remover item do carrinho
-function removeFromCart(productId) {
+    // Adicionar evento para o botão de fechar do carrinho
+    const closeCartBtn = document.querySelector('.cart-close-btn');
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', closeCart);
+    }
+
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.onclick = generateWhatsAppMessage;
+    }
+});
+
+// Event listeners for buttons
+document.querySelector('.clear-cart-btn').addEventListener('click', clearCart);
+
+// Assuming you have a way to render cart items with remove buttons and quantity inputs
+function renderCartItems() {
+    const cartItemsContainer = document.getElementById('cart-items');
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const updatedCart = cart.filter(item => item.id !== productId);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    updateCartCount();
-    showCart(); // Atualiza a visualização do carrinho
-}
-
-// Função para atualizar quantidade do item
-function updateItemQuantity(productId, quantity) {
-    if (quantity < 1) {
-        removeFromCart(productId);
-        return;
-    }
-
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const item = cart.find(item => item.id === productId);
-    
-    if (item) {
-        item.quantity = quantity;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        showCart(); // Atualiza a visualização do carrinho
-    }
-}
-
-// Função para gerar mensagem do WhatsApp
-function generateWhatsAppMessage() {
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    if (cartItems.length === 0) return '';
-
-    let message = "🛒 *Novo Pedido*\n\n";
-    let total = 0;
-
-    cartItems.forEach(item => {
-        const subtotal = item.price * item.quantity;
-        message += `*${item.name}*\n`;
-        message += `Quantidade: ${item.quantity}\n`;
-        message += `Preço: R$ ${item.price.toFixed(2)}\n`;
-        message += `Subtotal: R$ ${subtotal.toFixed(2)}\n\n`;
-        total += subtotal;
+    cartItemsContainer.innerHTML = '';
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `
+            <span>${item.name}</span>
+            <input type='number' value='${item.quantity}' min='1' onchange='updateItemQuantity("${item.id}", this.value)'>
+            <button onclick='removeFromCart("${item.id}")'>Remover</button>
+        `;
+        cartItemsContainer.appendChild(itemElement);
     });
-
-    message += `*Total do Pedido: R$ ${total.toFixed(2)}*\n\n`;
-    message += "💬 Preciso de suporte ou tenho dúvidas? Entre em contato:\n";
-    message += "📱 WhatsApp: (24) 98112-8510";
-
-    return encodeURIComponent(message);
 }
 
 function sendToWhatsApp() {
     const message = generateWhatsAppMessage();
     if (message) {
-        window.open(`https://wa.me/24981128510?text=${message}`, '_blank');
+        window.open(`https://wa.me/24981827333?text=${message}`, '_blank');
     } else {
         alert('Adicione itens ao carrinho primeiro!');
     }
@@ -501,7 +558,7 @@ function sendCustomMessage() {
         return;
     }
 
-    const whatsappNumber = "24981128510";
+    const whatsappNumber = "24981827333";
     const message = `👋 Olá! ${messageText}`;
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
     closeMessageModal();
@@ -529,46 +586,4 @@ function filterProducts(category) {
         : products.filter(product => product.category === category);
     
     displayProducts(filteredProducts);
-}
-
-// Inicializar quando o documento carregar
-document.addEventListener('DOMContentLoaded', function() {
-    displayProducts(products);
-    updateCartCount();
-    visitCounter.initialize();
-
-    // Adicionar evento para fechar carrinho quando clicar fora
-    const cartContainer = document.getElementById('cart-container');
-    if (cartContainer) {
-        cartContainer.addEventListener('click', function(e) {
-            if (e.target === cartContainer) {
-                hideCart();
-            }
-        });
-    }
-
-    // Adicionar evento para o botão de fechar do carrinho
-    const closeCartBtn = document.querySelector('.cart-close-btn');
-    if (closeCartBtn) {
-        closeCartBtn.addEventListener('click', hideCart);
-    }
-});
-
-// Event listeners for buttons
-document.querySelector('.clear-cart-btn').addEventListener('click', clearCart);
-
-// Assuming you have a way to render cart items with remove buttons and quantity inputs
-function renderCartItems() {
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cartItemsContainer.innerHTML = '';
-    cart.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.innerHTML = `
-            <span>${item.name}</span>
-            <input type='number' value='${item.quantity}' min='1' onchange='updateItemQuantity("${item.id}", this.value)'>
-            <button onclick='removeFromCart("${item.id}")'>Remover</button>
-        `;
-        cartItemsContainer.appendChild(itemElement);
-    });
 }
