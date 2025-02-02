@@ -17,6 +17,11 @@
     --background: #F5F5F5;
     --text: #333333;
     --shadow: rgba(0, 0, 0, 0.1);
+    --cartoon-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+    --cartoon-border: 3px solid #000;
+    --cartoon-purple: #8A2BE2;
+    --cartoon-blue: #4169E1;
+    --cartoon-red: #FF4757;
 }
 
 /* Estilos gerais */
@@ -26,7 +31,7 @@ body {
     background: linear-gradient(-45deg, #ff4757, #6C63FF, #3742fa, #5352ed);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
     color: #fff;
 }
 
@@ -109,6 +114,10 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
+    background: #fff;
+    border-bottom: var(--cartoon-border);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
 }
 
 .logo {
@@ -160,6 +169,16 @@ nav {
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem;
+    background: var(--cartoon-purple);
+    border: var(--cartoon-border);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
 }
 
 .cart-count {
@@ -175,6 +194,14 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--cartoon-red);
+    border: 2px solid #000;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-weight: bold;
+    position: absolute;
+    top: -8px;
+    right: -8px;
 }
 
 /* Barra de busca */
@@ -191,6 +218,12 @@ nav {
     border: 1px solid #ddd;
     border-radius: 20px;
     font-family: inherit;
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+    font-size: 1em;
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .search-bar button {
@@ -202,10 +235,24 @@ nav {
     color: white;
     cursor: pointer;
     transition: transform 0.3s;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .search-bar button:hover {
     transform: scale(1.1);
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Notificações */
@@ -220,6 +267,13 @@ nav {
     transform: translateX(150%);
     transition: transform 0.3s;
     z-index: 1000;
+    border: var(--cartoon-border);
+    border-radius: 15px;
+    box-shadow: var(--cartoon-shadow);
+    padding: 15px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .notification.show {
@@ -247,6 +301,12 @@ nav {
     border-radius: 5px;
     font-family: inherit;
     cursor: pointer;
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+    font-size: 1em;
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Main Content */
@@ -274,10 +334,24 @@ main {
     box-shadow: 0 2px 10px var(--shadow);
     position: relative;
     overflow: hidden;
+    background: #fff;
+    border: var(--cartoon-border);
+    border-radius: 15px;
+    box-shadow: var(--cartoon-shadow);
+    transform: rotate(-1deg);
+    transition: all 0.3s ease;
+    padding: 20px;
+    margin: 20px;
+    position: relative;
+}
+
+.product-card:nth-child(even) {
+    transform: rotate(1deg);
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+    transform: rotate(0) scale(1.05);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.4);
 }
 
 .product-emoji {
@@ -295,6 +369,10 @@ main {
     font-weight: 600;
     font-size: 1.2rem;
     text-align: center;
+    color: #000;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #fff, 3px 3px 0 #000;
 }
 
 .add-to-cart {
@@ -306,10 +384,24 @@ main {
     cursor: pointer;
     font-family: inherit;
     transition: background 0.3s ease;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .add-to-cart:hover {
     background: #5753d9;
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 .product-badge {
@@ -321,6 +413,19 @@ main {
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.8rem;
+    background: var(--cartoon-red);
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+    transform: rotate(-5deg);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 1;
 }
 
 .product-stock {
@@ -363,6 +468,12 @@ main {
     max-width: 500px;
     max-height: 80vh;
     overflow-y: auto;
+    background: #fff;
+    border: var(--cartoon-border);
+    border-radius: 20px;
+    box-shadow: var(--cartoon-shadow);
+    padding: 30px;
+    position: relative;
 }
 
 .cart-header {
@@ -378,6 +489,21 @@ main {
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem;
+    background: var(--cartoon-red);
+    border: var(--cartoon-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: var(--cartoon-shadow);
 }
 
 .cart-items {
@@ -434,10 +560,24 @@ main {
     cursor: pointer;
     font-family: inherit;
     transition: background 0.3s ease;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .checkout-btn:hover {
     background: #3d8b40;
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Preview Modal */
@@ -462,6 +602,12 @@ main {
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    background: #fff;
+    border: var(--cartoon-border);
+    border-radius: 20px;
+    box-shadow: var(--cartoon-shadow);
+    padding: 30px;
+    position: relative;
 }
 
 .preview-emoji {
@@ -483,6 +629,10 @@ main {
     font-weight: 600;
     text-align: center;
     margin-bottom: 1rem;
+    color: #000;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #fff, 3px 3px 0 #000;
 }
 
 .preview-description {
@@ -523,10 +673,24 @@ main {
     cursor: pointer;
     font-family: inherit;
     transition: transform 0.3s;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .support-btn:hover {
     transform: scale(1.05);
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Seção de cupom */
@@ -545,6 +709,12 @@ main {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-family: inherit;
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+    font-size: 1em;
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .coupon-section button {
@@ -554,6 +724,18 @@ main {
     padding: 0.5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Resumo do carrinho */
@@ -638,6 +820,14 @@ main {
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    border: var(--cartoon-border);
+    border-radius: 20px;
+    box-shadow: var(--cartoon-shadow);
+    padding: 30px;
+    position: relative;
 }
 
 .support-options {
@@ -930,6 +1120,12 @@ footer {
     max-width: 600px;
     max-height: 80vh;
     overflow-y: auto;
+    background: #fff;
+    border: var(--cartoon-border);
+    border-radius: 20px;
+    box-shadow: var(--cartoon-shadow);
+    padding: 30px;
+    position: relative;
 }
 
 .terms-text,
@@ -1060,6 +1256,19 @@ footer {
     border-radius: 3px;
     font-size: 0.8em;
     margin-left: 5px;
+    background: var(--cartoon-red);
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+    transform: rotate(-5deg);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 1;
 }
 
 /* Animações */
@@ -1099,6 +1308,12 @@ footer {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: #fff;
+    border: var(--cartoon-border);
+    border-radius: 20px;
+    box-shadow: var(--cartoon-shadow);
+    padding: 30px;
+    position: relative;
 }
 
 .auth-header {
@@ -1116,6 +1331,18 @@ footer {
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .auth-tab.active {
@@ -1143,11 +1370,18 @@ footer {
     background: #222;
     color: #fff;
     border-radius: 5px;
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+    font-size: 1em;
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .form-group input:focus {
     border-color: var(--gradient-primary);
     outline: none;
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .auth-btn {
@@ -1160,10 +1394,24 @@ footer {
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .auth-btn:hover {
     background: #45a049;
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 .auth-footer {
@@ -1278,10 +1526,24 @@ footer {
     cursor: pointer;
     font-size: 14px;
     transition: all 0.3s;
+    background: var(--cartoon-blue);
+    border: var(--cartoon-border);
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: var(--cartoon-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .login-btn:hover {
     background: #45a049;
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeIn {
@@ -1292,5 +1554,44 @@ footer {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 200% 200%;
+    animation: shine 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
