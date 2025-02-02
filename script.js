@@ -212,59 +212,6 @@ const products = [
     }
 ];
 
-// Sistema de contador de acessos
-const visitCounter = {
-    INCREMENT_VALUE: 4.5678, // Valor para incrementar a cada visita
-
-    initialize: function() {
-        // Verifica se é a primeira visita do dia
-        const today = new Date().toDateString();
-        const lastVisit = localStorage.getItem('lastVisit');
-        let totalVisits = parseFloat(localStorage.getItem('totalVisits'));
-        
-        // Se não existir contagem, inicializa com 0
-        if (isNaN(totalVisits)) {
-            totalVisits = 0;
-            localStorage.setItem('totalVisits', totalVisits);
-        }
-        
-        if (lastVisit !== today) {
-            // Nova visita do dia
-            localStorage.setItem('lastVisit', today);
-            totalVisits += this.INCREMENT_VALUE;
-            localStorage.setItem('totalVisits', totalVisits);
-            
-            // Atualiza o contador na interface
-            this.updateVisitDisplay();
-            
-            // Registra a visita (você pode implementar uma chamada de API aqui)
-            this.logVisit();
-        } else {
-            // Atualiza o display mesmo se não for uma nova visita
-            this.updateVisitDisplay();
-        }
-    },
-    
-    updateVisitDisplay: function() {
-        const totalVisits = parseFloat(localStorage.getItem('totalVisits')) || 0;
-        // Cria ou atualiza o elemento de exibição do contador
-        let counterDisplay = document.getElementById('visit-counter');
-        if (!counterDisplay) {
-            counterDisplay = document.createElement('div');
-            counterDisplay.id = 'visit-counter';
-            counterDisplay.style.cssText = 'position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;';
-            document.body.appendChild(counterDisplay);
-        }
-        // Converte para inteiro usando Math.floor para mostrar apenas a parte inteira
-        counterDisplay.textContent = `Visitas: ${Math.floor(totalVisits)}`;
-    },
-    
-    logVisit: function() {
-        // Aqui você pode implementar uma chamada para seu backend
-        console.log('Nova visita registrada:', new Date().toISOString());
-    }
-};
-
 // Função para exibir produtos
 function displayProducts(productsToShow) {
     const productsContainer = document.getElementById('products-container');
@@ -485,11 +432,17 @@ function updateCartDisplay() {
     cartContainer.style.display = 'block';
 }
 
-// Adicionar evento de clique ao botão de checkout
+// Função para limpar o carrinho
+function clearCart() {
+    localStorage.setItem('cart', JSON.stringify([]));
+    updateCartCount();
+    updateCartDisplay();
+}
+
+// Event listeners quando o DOM carrega
 document.addEventListener('DOMContentLoaded', function() {
     displayProducts(products);
     updateCartCount();
-    visitCounter.initialize();
 
     // Adicionar evento para fechar carrinho quando clicar fora
     const cartContainer = document.getElementById('cart-container');
@@ -516,65 +469,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Event listeners for buttons
 document.querySelector('.clear-cart-btn').addEventListener('click', clearCart);
 
-// Assuming you have a way to render cart items with remove buttons and quantity inputs
-function renderCartItems() {
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cartItemsContainer.innerHTML = '';
-    cart.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.innerHTML = `
-            <span>${item.name}</span>
-            <input type='number' value='${item.quantity}' min='1' onchange='updateItemQuantity("${item.id}", this.value)'>
-            <button onclick='removeFromCart("${item.id}")'>Remover</button>
-        `;
-        cartItemsContainer.appendChild(itemElement);
-    });
-}
-
-function sendToWhatsApp() {
-    const message = generateWhatsAppMessage();
-    if (message) {
-        window.open(`https://wa.me/24981827333?text=${message}`, '_blank');
-    } else {
-        alert('Adicione itens ao carrinho primeiro!');
-    }
-}
-
-function sendSupportMessage() {
-    const messageModal = document.getElementById('message-modal');
-    messageModal.classList.add('active');
-}
-
-function closeMessageModal() {
-    const messageModal = document.getElementById('message-modal');
-    messageModal.classList.remove('active');
-}
-
-function sendCustomMessage() {
-    const messageText = document.getElementById('support-message').value.trim();
-    if (!messageText) {
-        alert('Por favor, digite sua mensagem antes de enviar.');
-        return;
-    }
-
-    const whatsappNumber = "24981827333";
-    const message = `👋 Olá! ${messageText}`;
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
-    closeMessageModal();
-    document.getElementById('support-message').value = '';
-}
-
-// Fechar modal ao clicar fora
-document.addEventListener('click', function(event) {
-    const messageModal = document.getElementById('message-modal');
-    const messageContent = document.querySelector('.message-content');
-    
-    if (event.target === messageModal) {
-        closeMessageModal();
-    }
-});
-
 // Função para filtrar produtos
 function filterProducts(category) {
     const buttons = document.querySelectorAll('nav button');
@@ -586,4 +480,13 @@ function filterProducts(category) {
         : products.filter(product => product.category === category);
     
     displayProducts(filteredProducts);
+}
+
+function sendToWhatsApp() {
+    const message = generateWhatsAppMessage();
+    if (message) {
+        window.open(`https://wa.me/24981827333?text=${message}`, '_blank');
+    } else {
+        alert('Adicione itens ao carrinho primeiro!');
+    }
 }
