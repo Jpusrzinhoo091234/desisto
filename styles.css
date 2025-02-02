@@ -805,16 +805,103 @@ footer::before {
     50% { transform: translateY(-10px); }
 }
 
-/* Estilização da barra de rolagem do chat */
-.chat-messages::-webkit-scrollbar {
-    width: 6px;
+/* Modal de Mensagem */
+.message-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
 }
 
-.chat-messages::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+.message-modal.active {
+    display: flex;
 }
 
-.chat-messages::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 3px;
+.message-content {
+    background: var(--background);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.message-header h3 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.message-body p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+#support-message {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    resize: vertical;
+}
+
+#support-message:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 10px rgba(77, 238, 234, 0.3);
+}
+
+.send-button {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.send-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+.send-button i {
+    font-size: 1.3rem;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
